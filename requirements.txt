@@ -6,6 +6,5 @@ langchain_google_genai
 langchain_qdrant
 openai
 pypdf
-os
 pathlib
 dotenv
