@@ -1,7 +1,7 @@
 import streamlit as st
 from pdf_processing import process_pdf
 from chat_handler import handle_chat
-from ui_components import set_theme, layout_sidebar
+from ui_components import layout_sidebar
 from cache_logic import init_db, is_file_processed, mark_file_as_processed
 import hashlib
 from langchain_community.vectorstores import Chroma
@@ -13,9 +13,6 @@ conn, cursor = init_db()
 # Layout
 st.set_page_config(layout="wide")
 st.title("PDF Chat Assistant")
-
-# Dark/Light Mode Toggle
-set_theme()
 
 # Sidebar for upload and processing
 uploaded_file, process_button, chat_button = layout_sidebar()
@@ -44,8 +41,8 @@ if uploaded_file and process_button:
             mark_file_as_processed(cursor, file_hash, uploaded_file.name)
             st.sidebar.success("PDF processed and indexed!")
 
-    st.session_state.vector_db = vector_db
-    st.session_state.chat_ready = True
+        st.session_state.vector_db = vector_db
+        st.session_state.chat_ready = True
 
 # Enable chat button after processing
 if st.session_state.chat_ready:
