@@ -21,13 +21,9 @@ def set_theme():
         st.markdown(
             """
             <style>
-            body {
-                background-color: #0e1117;
-                color: #fafafa;
-            }
-            .stApp {
-                background-color: #0e1117;
-                color: #fafafa;
+            body, .stApp {
+                background-color: #0e1117 !important;
+                color: #fafafa !important;
             }
             </style>
             """,
@@ -37,13 +33,9 @@ def set_theme():
         st.markdown(
             """
             <style>
-            body {
-                background-color: #ffffff;
-                color: #000000;
-            }
-            .stApp {
-                background-color: #ffffff;
-                color: #000000;
+            body, .stApp {
+                background-color: #ffffff !important;
+                color: #000000 !important;
             }
             </style>
             """,

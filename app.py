@@ -34,16 +34,15 @@ embedding_model = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004"
 if uploaded_file and process_button:
     file_bytes = uploaded_file.getvalue()
     file_hash = hashlib.md5(file_bytes).hexdigest()
-
-    if is_file_processed(cursor, file_hash):
-        st.sidebar.info("File already processed.")
-        # Load existing ChromaDB
-        persist_directory = f"chroma_db_{file_hash}"
-        vector_db = Chroma(persist_directory=persist_directory, embedding_function=embedding_model)
-    else:
-        vector_db = process_pdf(file_bytes, file_hash, uploaded_file.name)
-        mark_file_as_processed(cursor, file_hash, uploaded_file.name)
-        st.sidebar.success("PDF processed and indexed!")
+    with st.spinner("Processing PDF..."):
+        if is_file_processed(cursor, file_hash):
+            st.sidebar.info("File already processed.")
+            # Re-process the file to recreate the vector_db in memory
+            vector_db = process_pdf(file_bytes, file_hash, uploaded_file.name)
+        else:
+            vector_db = process_pdf(file_bytes, file_hash, uploaded_file.name)
+            mark_file_as_processed(cursor, file_hash, uploaded_file.name)
+            st.sidebar.success("PDF processed and indexed!")
 
     st.session_state.vector_db = vector_db
     st.session_state.chat_ready = True

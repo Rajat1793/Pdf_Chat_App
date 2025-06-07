@@ -12,4 +12,3 @@ This Streamlit app allows users to upload PDF documents, process them, and chat 
 - **Chat Interface**: Ask questions about the PDF content and get responses.
 - **Export Chat History**: Download the chat history as a `.txt` file.
 - **Dark/Light Mode**: Toggle between dark and light themes.
-# pdf_chat_app

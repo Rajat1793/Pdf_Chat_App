@@ -1,3 +1,6 @@
+# not a modular code all working in single file
+# use it just for checking the working
+
 import streamlit as st
 from dotenv import load_dotenv
 from pathlib import Path

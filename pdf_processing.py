@@ -28,12 +28,9 @@ def process_pdf(file_bytes, file_hash, file_name):
     #     force_recreate=True
     # )
     
-    # Use a persistent directory for ChromaDB
-    persist_directory = f"chroma_db_{file_hash}"
+    # since the ChromoDB and streamlite uses different sqlite version we cant use the presistent storage
     vector_db = Chroma.from_documents(
         documents=split_docs,
-        embedding=embedding_model,
-        persist_directory=persist_directory
+        embedding=embedding_model
     )
-    vector_db.persist()
     return vector_db
