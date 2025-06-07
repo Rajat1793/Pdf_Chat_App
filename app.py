@@ -4,6 +4,8 @@ from chat_handler import handle_chat
 from ui_components import set_theme, layout_sidebar
 from cache_logic import init_db, is_file_processed, mark_file_as_processed
 import hashlib
+from langchain_community.vectorstores import Chroma
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
 # Initialize SQLite DB
 conn, cursor = init_db()
@@ -26,6 +28,8 @@ if "vector_db" not in st.session_state:
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
+embedding_model = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")
+
 # Process PDF
 if uploaded_file and process_button:
     file_bytes = uploaded_file.getvalue()
@@ -33,6 +37,9 @@ if uploaded_file and process_button:
 
     if is_file_processed(cursor, file_hash):
         st.sidebar.info("File already processed.")
+        # Load existing ChromaDB
+        persist_directory = f"chroma_db_{file_hash}"
+        vector_db = Chroma(persist_directory=persist_directory, embedding_function=embedding_model)
     else:
         vector_db = process_pdf(file_bytes, file_hash, uploaded_file.name)
         mark_file_as_processed(cursor, file_hash, uploaded_file.name)

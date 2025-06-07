@@ -8,3 +8,4 @@ openai
 pypdf
 pathlib
 dotenv
+chromadb
