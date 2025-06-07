@@ -8,4 +8,4 @@ openai
 pypdf
 pathlib
 dotenv
-chromadb
+faiss-cpu
